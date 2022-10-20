@@ -1,0 +1,48 @@
+JETPACK COMPOSE:
+arctic fox beta - latest version of android studio
+modern native ui toolkit for android develp
+
+ built from scratch to accelerate development of ui
+focus on building features and spend less time in creating ui
+
+**pinterest playstore twitter etc ,all uses jetpack
+
+composable - just a regular fxn that enables your function to call other composable functions
+ 
+class is made to make a main fxn that is going to be launched when user starts app
+
+here all you need to do is call composable fxns to define what elements you want and the compose compiler will do the rest
+
+These functions let you define your app's UI programmatically by describing how it should look and providing data dependencies, rather than focusing on the process of the UI's
+ construction (initializing an element, attaching it to a parent, etc.).
+To create a composable function, just add the @Composable annotation to the function name.
+
+Jetpack Compose uses a Kotlin compiler plugin to transform these composable functions into the app's UI elements. For example, the Text composable function that is defined
+ by the Compose UI library displays a text label on the screen.
+
+**The @Preview annotation lets you preview your composable functions within Android Studio without having to build and install the
+ app to an Android device or emulator.
+ The annotation must be used on a composable function that does not take in parameters. 
+For this reason, you can't preview the MessageCard function directly. Instead, make a second function named PreviewMessageCard, which calls MessageCard with an appropriate parameter. Add the @Preview annotation before @Composable.
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MessageCard("Android")
+        }
+    }
+}
+
+@Composable
+fun MessageCard(name: String) {
+    Text(text = "Hello $name!")
+}
+
+@Preview
+@Composable
+fun PreviewMessageCard() {
+    MessageCard("Android")
+}
+
+Rebuild your project. The app itself doesn't change, since the new PreviewMessageCard function isn't called anywhere,

@@ -1,0 +1,95 @@
+LAYOUTS:
+
+UI elements are hierarchical, with elements contained in other elements.
+In Compose, you build a UI hierarchy by calling composable functions from other composable functions.
+
+Start by making the message composable richer by displaying the name of its author and a message content. You need to first change the composable parameter to accept a Message object instead of a String, and add another Text composable inside the MessageCard composable. Make sure to update the preview as well.
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MessageCard(Message("Android", "Jetpack Compose"))
+        }
+    }
+}
+
+data class Message(val author: String, val body: String)
+
+@Composable
+fun MessageCard(msg: Message) {
+    Text(text = msg.author)
+    Text(text = msg.body)
+}
+
+@Preview
+@Composable
+fun PreviewMessageCard() {
+    MessageCard(
+        msg = Message("Colleague", "Hey, take a look at Jetpack Compose, it's great!")
+    )
+}
+
+here text was overwritten because position was not mentioned
+
+** Using a Column
+The Column function lets you arrange elements vertically. Add Column to the MessageCard function.
+You can use Row to arrange items horizontally and Box to stack elements.
+@Composable
+fun MessageCard(msg: Message) {
+    Column {
+        Text(text = msg.author)
+        Text(text = msg.body)
+    }
+}
+ this adds both texts in a single column.
+
+**Add an image element
+Enrich your message card by adding a profile picture of the sender. Use the Resource Manager to import 
+an image from your photo library . Add a Row composable to have a well structured design and an Image composable inside it.
+@Composable
+fun MessageCard(msg: Message) {
+    Row {
+        Image(
+            painter = painterResource(R.drawable.profile_picture),
+            contentDescription = "Contact profile picture",
+        )
+           Column {
+            Text(text = msg.author)
+            Text(text = msg.body)
+        }
+      }
+  }
+
+**Configure your layout
+Your message layout has the right structure but its elements aren't well spaced and the image is too big! To decorate or
+ configure a composable, Compose uses modifiers. They allow you to change the composable's size, layout, appearance or
+ add high-level interactions, such as making an element clickable. You can chain them to create richer composables.
+
+(import androidx.compose.ui.Modifier)
+@Composable
+fun MessageCard(msg: Message) {
+    // Add padding around our message
+    Row(modifier = Modifier.padding(all = 8.dp)) {
+        Image(
+            painter = painterResource(R.drawable.profile_picture),
+            contentDescription = "Contact profile picture",
+            modifier = Modifier
+                // Set image size to 40 dp
+                .size(40.dp)
+                // Clip image to be shaped as a circle
+                .clip(CircleShape)
+        )
+
+        // Add a horizontal space between the image and the column
+        Spacer(modifier = Modifier.width(8.dp))
+
+        Column {
+            Text(text = msg.author)
+            // Add a vertical space between the author and message texts
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(text = msg.body)
+        }
+    }
+}
+  

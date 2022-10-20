@@ -1,0 +1,2 @@
+**Lists and Animations:
+You will use the clickable modifier to handle click events on the composable. 
